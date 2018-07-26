@@ -235,6 +235,11 @@ h1{
     margin-top: 20px;
     margin-left: 10px;
 }
+#result_outcome{
+    width: 280px;
+    height: 280px;
+    margin: auto;
+}
 .result_box{
     width: 400px;
     height: 75px;
