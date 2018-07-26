@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!--Favicon Link-->
+    <link rel="icon" href="assets/images/favicon_rock_paper_lizard_spock.png">
+    <!--jQuery CDN-->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <!--Firebase CDN-->
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
+
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
+
+    <!--CSS Reset-->
+    <link rel="style sheet" href="assets/css/reset.css">
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+    <!--Font Awesome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ"
+        crossorigin="anonymous">
+    <!--Local CSS-->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!--Google Font-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:700" rel="stylesheet">
+    <!--Particles.JS CDN & Comet CDN for Animated Background-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.2/particles.min.js">
+    <link href="https://npmcdn.com/comet-css@1.2.0/dist/comet.min.css">
+</head>
+
+<body>
+
+    <!--Sidebar Instruction Panel-->
+    <i class="fas fa-info-circle fa-3x toggle_menu"></i>
+
+    <div class="sidebar_menu">
+        <i class="fa fa-times instruction_panel"></i>
+        <section>
+            <h5 class=" boxed_item card-title">Game Rules</h5>
+        </section>
+        <p class="card-text-instruction"> Dr. Sheldon Cooper will explain the rules of the game in the video below:
+            <iframe width="300" height="200" src="https://www.youtube.com/embed/_PUEoDYpUyQ?rel=0&amp;showinfo=0&amp;start=19&amp;end=64"
+                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </p>
+        <div class="flip_card">
+            <div class="flip_card_front">
+                <img src="assets/images/rpsls_image.jpg" alt="RPSLS Icon"> </div>
+            <div class="flip_card_back">
+                <div class="flip_card_details">
+                    <h2>Instructions</h2>
+                    <div class="written_rules">
+                        Scissors cuts paper. Paper covers rock. Rock crushes lizard. Lizard poisons Spock. Spock smashes scissors. Scissors decapitates
+                        lizard. Lizard eats paper. Paper disproves Spock. Spock vaporizes rock. And, as it always has, rock
+                        crushes scissors.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <!--JUMBOTRON-->
+        <div class="jumbotron jumbotron-fluid bg-transparent">
+            <div class="container">
+                <h1 class="display-4">ROCK | PAPER | SCISSORS | LIZARD | SPOCK</h1>
+                <div class="nameBox">
+                    <input type="text" id="playerName" placeholder="Submit Gamer Tag">
+                    <div id="buttonLocation">
+                        <button type="button" id="gamer_tag_button" class="btn btn-outline-warning">Let's Play</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--GAME CONTENT-->
+        <div class="row">
+            <div class="card-deck">
+                <!--LEFT CARD FOR PLAYER 1-->
+                <div class="card">
+                    <img id="player_1_choice" class="card-img-top" src="assets/images/placeimg_300_200_grayscale_tech.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 id="player1Name" class="card-title">PLAYER 1</h5>
+                        <div class="player_1_stats">WINS | TIES | LOSES</div>
+                        <div class="player_1_stat_counter">... | ... | ...</div>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button id ="rockBtn1" type="button" class="btn btn-outline-danger">ROCK</button>
+                            <button id ="paperBtn1" type="button" class="btn btn-outline-danger">PAPER</button>
+                            <button id ="scissorBtn1" type="button" class="btn btn-outline-danger">SCISSOR</button>
+                            <button id ="lizardBtn1" type="button" class="btn btn-outline-danger">LIZARD</button>
+                            <button id ="spockBtn1" type="button" class="btn btn-outline-danger">SPOCK</button>
+                        </div>
+                    </div>
+                </div>
+                <!--CENTER CARD FOR GAME RESULTS-->
+                <div class="card">
+                    <img id="result_outcome" class="card-img-top" src="assets/images/placeimg_300_200_grayscale_tech.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 id="result" class="card-title">RESULT</h5>
+                        <div class="result_box"></div>
+
+                    </div>
+                </div>
+                <!--RIGHT CARD FOR PLAYER 2-->
+                <div class="card">
+                    <img id="player_2_choice" class="card-img-top" src="assets/images/placeimg_300_200_grayscale_tech.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 id="player2Name" class="card-title">PLAYER 2</h5>
+                        <div class="player_2_stats">WINS | TIES | LOSES</div>
+                        <div class="player_2_stat_counter">... | ... | ...</div>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                                <button id ="rockBtn2" type="button" class="btn btn-outline-danger">ROCK</button>
+                                <button id ="paperBtn2" type="button" class="btn btn-outline-danger">PAPER</button>
+                                <button id ="scissorBtn2" type="button" class="btn btn-outline-danger">SCISSOR</button>
+                                <button id ="lizardBtn2" type="button" class="btn btn-outline-danger">LIZARD</button>
+                                <button id ="spockBtn2" type="button" class="btn btn-outline-danger">SPOCK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--CANVAS FOR ANIMATED BACKGROUND-->
+    <canvas class="background"></canvas>
+    <!--LOCAL JAVASCRIPT-->
+    <script src="assets/javascript/app.js"></script>
+    <!--PARTICLE.JS CDN-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.1/particles.min.js"></script>
+</body>
+
+</html>
+
+<!--NOTES-->
+
+<!--Game Rules
+    Scissors cuts paper. Paper covers rock. Rock crushes lizard. 
+    Lizard poisons Spock. Spock smashes scissors. 
+    Scissors decapitates lizard. Lizard eats paper. 
+    Paper disproves Spock. Spock vaporizes rock. 
+    And, as it always has, rock crushes scissors.
+    https://www.youtube.com/watch?v=_PUEoDYpUyQ&index=20&list=RD3hxC9bgtA7M-->
