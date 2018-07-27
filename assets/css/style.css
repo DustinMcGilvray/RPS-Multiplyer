@@ -155,9 +155,9 @@ h1{
     text-align: center;
 }
 .nameBox input{
-   margin-left: 250px;
+   margin-left: 350px;
    margin-top: 20px;
-   width: 50%;
+   width: 30%;
 }
 .nameBox input[type="text"]{
     border: none;

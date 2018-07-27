@@ -15,7 +15,7 @@ $(document).ready(function () {
         color: 'white'
     });
 
-    //Initialize Firebase
+    //INITIALIZE FIREBASE
     var config = {
         apiKey: "AIzaSyBs5ysxfb6IoP1NJYH5czYORlNSjOoTtLM",
         authDomain: "rpsls-multiplayer.firebaseapp.com",
@@ -30,73 +30,131 @@ $(document).ready(function () {
     var database = firebase.database();
 
     //GLOBAL VARIABLES/INITIAL VALUES
-    //DETERMINE NUMBER OF PLAYERS
-    var numPlayers = 0;
-    //CHOICE OF PLAY OBJECTS STORED HERE
-    var player1 = null;
-    var player2 = null;
-    //SUBMITTED GAMER TAGS STORED HERE
-    var player1GamerTag = "";
-    var player2GamerTag = "";
-    //PLAYERS CHOICE STORED HERE
-    var player1Choice = "";
-    var player2Choice = "";
-    //DETERMINE WHICH PLAYERS TURN IT IS
-    var playerTurn = 0;
-
-    var rpslsArray = {
+        //DETERMINE NUMBER OF PLAYERS
+        var numPlayers = 0;
+        //CHOICE OF PLAY OBJECTS STORED HERE
+        var player1 = null;
+        var player2 = null;
+        //SUBMITTED GAMER TAGS STORED HERE
+        var player1GamerTag = "";
+        var player2GamerTag = "";
+        //PLAYERS CHOICE STORED HERE
+        var player1Choice = "";
+        var player2Choice = "";
+        //DETERMINE WHICH PLAYERS TURN IT IS
+        var playerTurn = 0;
+        //ARRAY OF GIFS REPRESENTING PLAYER CHOICES
+        var rpslsArray = {
         rock: "assets/images/the_rock_eyebrow.gif",
         paper: "assets/images/paper.gif",
-        scissor: "assets/images/edward_scissor_hands.gif",
+        scissors: "assets/images/edward_scissor_hands.gif",
         lizard: "assets/images/godzilla_fire_breather.gif",
         spock: "assets/images/spock.gif"
-    };
+        };
 
     // CAPTURE GAMER TAG SUBMISSION WITH BUTTON CLICK
     $("#gamer_tag_button").on("click", function (event) {
         // Don't refresh the page!
         event.preventDefault();
         // LOGIC FOR STORING PLAYER NAME
-        name = $("#player1Name").val().trim();
+        name = $("#playerName").val().trim();
         database.ref().push({
-            name: name
+            name: name  
         });
+
+        $("#playerName").val("");
     });
+
     // FIREBASE WATCHER + INITIAL LOADER 
     database.ref().on("value", function (snapshot) {
         // CONSOLE.LOG NAME COMING FROM SNAPSHOT
         console.log(snapshot.val());
         console.log(snapshot.val().name);
-        // DISPLAY GAMER TAG
-        $("#player1Name").text(snapshot.val().name);
+
+        // DISPLAY GAMER TAG FOR PLAYER 1
+        $("#player1Name").text(name);
+
         // ERROR HANDELING
     }, function (errorObject) {
         console.log("Errors handled: " + errorObject.code);
     });
 
+    // CAPTURE PLAYER CHOICE FOR GAME PLAY WITH BUTTON CLICK
+    $(".btn-group button").on("click", function (event) {
+        console.log("click");
+        event.preventDefault();
+        //UPDATE PLAYER1CHOICE VARIABLE WITH THE BUTTON TEXT OF *WHATEVER BUTTON CLICK ON* BY USING $(this).
+        player1Choice = $(this).text().trim();
+        
+        
+        //USING BRACKET NOTATION INSTEAD OF DOT NOTATION BECAUSE THE PROPERTY DATA TYPE WASN"T THE SAME
+        //AS THE PLAYER1CHOICE DATA TYPE (WHICH WAS A STRING...)
+        var newImage = rpslsArray[player1Choice];
+            console.log({newImage})
 
+        //CHANGING SRC ATTRIBUTE TO THE CORRESPONDING IMAGE URL OF THE IMAGE WE CLICKED ON
+            $("#player_1_choice").attr("src", newImage);
+        console.log(player1Choice + "This is Working!");
+        
+        database.ref().push({
+            player1Choice: player1Choice,
+           
+        }); 
+    });
 
 
     // CAPTURE PLAYER CHOICE FOR GAME PLAY WITH BUTTON CLICK
-    $("#rockBtn1").on("click", function (event) {
+    $(".btn-group 2 button").on("click", function (event) {
         console.log("click");
         event.preventDefault();
-
-        player1Choice = $("#rockBtn1").text().trim();
-        var newImage = rpslsArray.player1Choice
-        $("#player_1_choice").attr("src", newImage);
-        console.log(player1Choice + "This is Working!");
+        //UPDATE PLAYER1CHOICE VARIABLE WITH THE BUTTON TEXT OF *WHATEVER BUTTON CLICK ON* BY USING $(this).
+        player2Choice = $(this).text().trim();
+        
+        //USING BRACKET NOTATION INSTEAD OF DOT NOTATION BECAUSE THE PROPERTY DATA TYPE WASN"T THE SAME
+        //AS THE PLAYER1CHOICE DATA TYPE (WHICH WAS A STRING...)
+        var newImage2 = rpslsArray[player2Choice];
+            console.log({newImage2})
+        //CHANGING SRC ATTRIBUTE TO THE CORRESPONDING IMAGE URL OF THE IMAGE WE CLICKED ON
+        
+            $("#player_2_choice").attr("src", newImage2);
+        console.log(player2Choice + "This is Working Too!");
+        
         database.ref().push({
-            player1Choice: player1Choice
-        });
+            player2Choice: player2Choice
+ 
+        }); 
     });
-    // FIREBASE WATCHER + INITIAL LOADER 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // // FIREBASE WATCHER + INITIAL LOADER 
     database.ref().on("value", function (snapshot) {
         // CONSOLE.LOG NAME COMING FROM SNAPSHOT
+        console.log(snapshot.val());
+        console.log(snapshot.val().name);
         console.log("snapshot.val is " + snapshot.val());
         console.log(snapshot.val().player1Choice);
         //DISPLAY ROCK BUTTON IMAGE
-        $("#player_1_choice").html(snapshot.val().rpslsArray.rock);
+        $("#player_1_choice").append(snapshot.val().rpslsArray.rock);
         // ERROR HANDELING
     }, function (errorObject) {
         console.log("Errors handled: " + errorObject.code);
